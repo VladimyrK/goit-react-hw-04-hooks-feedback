@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 
 import './FeedbackOptions.module.css';
 
-const FeedbackOptions = ({ options }) => {
+const FeedbackOptions = ({ options, onClick }) => {
   return (
     <>
       {options.map(({ id, name, func }) => (
-        <button key={id} onClick={func} name={name}>
+        <button key={id} onClick={onClick} name={name}>
           {name}
         </button>
       ))}
