@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import FeedbackOptions from './components/FeedbackOptions';
 import Section from './components/Section';
@@ -10,8 +10,6 @@ function App() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [positive, setPositive] = useState(0);
 
   const options = [
     { id: '1', name: 'Good' },
@@ -22,10 +20,15 @@ function App() {
     { id: '3', name: 'Bad' },
   ];
 
-  useEffect(() => {
-    setTotal(good + neutral + bad);
-    setPositive(Math.round((good / total) * 100));
-  }, [bad, good, neutral, total]);
+  const countTotalFeedback = () => {
+    return good + neutral + bad;
+  };
+
+  const countPositiveFeedbackPercentage = () => {
+    let percentage = (good * 100) / countTotalFeedback();
+
+    return Math.round(percentage);
+  };
 
   const handleBtnClick = e => {
     switch (e.target.name) {
@@ -54,8 +57,8 @@ function App() {
             good={good}
             bad={bad}
             neutral={neutral}
-            total={total}
-            positive={positive}
+            total={countTotalFeedback()}
+            positive={countPositiveFeedbackPercentage()}
           ></Statistics>
         ) : (
           <p>Nothing here yet, but you could leave your feedback</p>
